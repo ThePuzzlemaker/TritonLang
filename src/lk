@@ -1,8 +1,9 @@
 #!/bin/env lua
 -- LuaK: C/C++-Style Lua
-local fs = require("lfs")
 local pl = require("pl")
 local lexer = require("pl.lexer")
+local file = require("pl.file")
+local path = require("pl.path")
 
 local args = {...}
 
@@ -10,16 +11,32 @@ local lk = { ["_VERSION"] = "1.0.0-DEV" }
 
 lk.optsTable = { ["lib"] = nil, ["verbose"] = nil, ["validate"] = nil, ["interpret"] = nil }
 
+function lk.checkFileExists(filePath)
+	if path.exists(filePath) and path.isfile(filePath) then
+		return true
+	else
+		return false
+	end
+end
+
+function lk.checkDirectoryExists(dirPath)
+	if path.exists(dirPath) and path.isdir(dirPath) then
+		return true
+	else
+		return false
+	end
+end
+
 -- In case I use exit() instead of os.exit() (used to Python's exit() :p)
 function exit(i)
 	 os.exit(i) 
 end
 
 -- Table to newline-terminated string
-function lk.tableToNLTString(table)
+function lk.tableToNLTString(tbl)
 	str = ""
-	for i,v in ipairs(table) do
-		if i == #table then
+	for i,v in ipairs(tbl) do
+		if i == #tbl then
 			str = str .. v
 		else 
 			str = str .. v .. "\n"
@@ -28,7 +45,7 @@ function lk.tableToNLTString(table)
 	return str
 end
 
-function lk.parseOpts(args)
+function lk.parseOpts(args) 
 	tabstr = lk.tableToNLTString(args)
 	tok = lexer.scan(tabstr,nil,{space=false})
 	local t,v = tok()
@@ -45,6 +62,8 @@ function lk.parseOpts(args)
 			-- Do nothing
 		elseif t == 'space' then
 			-- Do nothing
+		elseif t == 'iden' then
+			-- Probably a file name; do nothing
 		else
 			print("[ERROR] Unrecognized option: '-" .. v .. "'")
 			exit()
@@ -104,10 +123,30 @@ else
 		else
 			print("       Interpret:    Off")
 		end
+		if args[#args-1] == nil then
+			print("[ERROR] No input file argument found.")
+			exit(-1)
+		elseif args[#args] == nil then
+			print("[ERROR] No output file argument found.")
+			exit(-1)
+		end
+		
+		print("[INFO] File Input: " .. args[#args-1])
+		print("[INFO] File Output: " .. args[#args])
 	end
-
-
-
+	local inputPath = args[#args-1]
+	local outputPath = args[#args]
+	if not lk.checkFileExists(inputPath) then
+		print("[ERROR] Input file '" .. inputPath .. "' doesn\'t exist.") 
+		exit(-1)
+	end
+	if lk.checkFileExists(outputPath) then
+		print("[WARNING] Output file '" .. outputPath .. "' will be overwritten.")
+	end
+	if lk.optsTable["verbose"] then
+		print("[INFO] Input file: '" .. inputPath .. "'.")
+		print("[INFO] Output file: '" .. outputPath .. "'.") 
+	end
 	exit(0)
 end
 
