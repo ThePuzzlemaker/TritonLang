@@ -3,7 +3,7 @@
 
 # Dependencies
 
-  (https://github.com/stevedonovan/penlight)[Penlight by Steve Donovan]
+  (Penlight by Steve Donovan)[https://github.com/stevedonovan/penlight]
 
 # Hello, world!
 
