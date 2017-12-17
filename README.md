@@ -7,8 +7,6 @@
   
   [LuaFileSystem by Kepler Project](https://github.com/KeplerProject/LuaFileSystem)
 
-  [LuaFileSystem by Kepler Project](https://github.com/KeplerProject/LuaFileSystem)
-
 # Hello, world!
 
   ```
