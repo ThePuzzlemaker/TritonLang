@@ -14,3 +14,6 @@ int main() {
     io::print("Hello, world!");
     return 0;
 }
+```
+
+[Back to Homepage](/KLang/)
