@@ -3,4 +3,4 @@
 [Lua Invocation](Lua-Invocation)
 
 
-[Back](../)
+[Back](../Links)
