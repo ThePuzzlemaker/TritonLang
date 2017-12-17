@@ -1,0 +1,7 @@
+-- Lua can be injected into KLang using the lua::call() function.
+
+void main() {
+	lua::call([[
+		print("Hello, world!")
+	]]);
+}
