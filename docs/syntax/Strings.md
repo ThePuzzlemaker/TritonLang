@@ -30,3 +30,5 @@ Multi-line strings can also be in one line.
 ```
 [[ Multi-line string that only takes up one line ]]
 ```
+
+[Back to Homepage](/KLang/)
