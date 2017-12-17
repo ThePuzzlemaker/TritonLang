@@ -1,6 +1,7 @@
 -- Example of the IO library.
 #include <io>
 
-void main() {
+int main() {
 	io::print("Hello, world!");
+	return 0;
 }
