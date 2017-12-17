@@ -3,3 +3,34 @@
 Welcome to KLang! Once KLang is deemed stable, I will create a Getting Started guide. For now, I have this documentation.
 
 [Links](Links)
+
+# Dependencies
+
+  [Penlight by Steve Donovan](https://github.com/stevedonovan/penlight)
+  
+  [LuaFileSystem by Kepler Project](https://github.com/KeplerProject/LuaFileSystem)
+
+# Hello, world!
+
+  ```
+  #include <io>
+  
+  void main() {
+    io::info("Hello, world!");
+  }
+  ```
+
+# Advantages
+
+  - Header Files
+  - Compilation to Lua
+  - Static and Dynamic Libraries
+
+# Roadmap
+
+  1. Actual parsing
+  2. Compilation to Lua
+  3. Headers
+  4. Dynamic/Static Libraries
+  5. Other stuff not planned yet :p
+
