@@ -6,4 +6,4 @@
 [Syntax](syntax/)
 
 
-[Back to Homepage](/KLang/)
+[Back](./)

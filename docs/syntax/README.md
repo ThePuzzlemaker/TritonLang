@@ -6,4 +6,4 @@
 
 [Comments](Comments)
 
-[Back to Homepage](/KLang/)
+[Back](../)
