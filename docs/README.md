@@ -15,8 +15,9 @@ Welcome to KLang! Once KLang is deemed stable, I will create a Getting Started g
   ```
   #include <io>
   
-  void main() {
+  int main() {
     io::info("Hello, world!");
+    return 0;
   }
   ```
 
