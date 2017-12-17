@@ -4,6 +4,8 @@
 # Dependencies
 
   [Penlight by Steve Donovan](https://github.com/stevedonovan/penlight)
+  
+  [LuaFileSystem by Kepler Project](https://github.com/KeplerProject/LuaFileSystem)
 
   [LuaFileSystem by Kepler Project](https://github.com/KeplerProject/LuaFileSystem)
 
