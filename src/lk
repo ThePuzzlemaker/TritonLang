@@ -64,6 +64,14 @@ function lk.parseOpts(args)
 			-- Do nothing
 		elseif t == 'iden' then
 			-- Probably a file name; do nothing
+		elseif t == 'string' then
+			-- Probably a file name; do nothing
+		elseif t == '/' then
+			-- Probably a file name; do nothing
+		elseif t == '\\' then
+			-- Probably a file name; do nothing
+		elseif t == '.' then
+			-- Probably a file name; do nothing
 		else
 			print("[ERROR] Unrecognized option: '-" .. v .. "'")
 			exit()
@@ -130,9 +138,6 @@ else
 			print("[ERROR] No output file argument found.")
 			exit(-1)
 		end
-		
-		print("[INFO] File Input: " .. args[#args-1])
-		print("[INFO] File Output: " .. args[#args])
 	end
 	local inputPath = args[#args-1]
 	local outputPath = args[#args]
