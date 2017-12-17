@@ -3,4 +3,4 @@
 [Lua Invocation](Lua-Invocation)
 
 
-[Back to Homepage](../)
+[Back](../)
