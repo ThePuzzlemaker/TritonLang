@@ -12,8 +12,9 @@
   ```
   #include <io>
   
-  void main() {
+  int main() {
     io::info("Hello, world!");
+    return 0;
   }
   ```
 
