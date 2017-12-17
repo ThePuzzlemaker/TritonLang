@@ -56,3 +56,5 @@ local io = lk.usingLibrary(io)
 io.print("Hello, world!")
 os.exit(0)
 ```
+
+[Back to Homepage](/KLang/)
