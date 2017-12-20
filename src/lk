@@ -184,7 +184,7 @@ end
 if #args < 2 then
 	print("Usage: lk [OPTIONS] <file> <output>       ")
 	print("       -l : Compile as library.           ")
-	print("       -v : Verbose.           https://           ")
+	print("       -v : Verbose.                      ")
 	print("       -i : Don't compile, just interpret.")
 	print("       -V : Just validate the file.       ")	
 else
