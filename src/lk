@@ -11,6 +11,62 @@ local lk = { ["_VERSION"] = "1.0.0-DEV" }
 
 lk.optsTable = { ["lib"] = nil, ["verbose"] = nil, ["validate"] = nil, ["interpret"] = nil }
 
+function table.val_to_str ( v )
+  if "string" == type( v ) then
+    v = string.gsub( v, "\n", "\\n" )
+    if string.match( string.gsub(v,"[^'\"]",""), '^"+$' ) then
+      return "'" .. v .. "'"
+    end
+    return '"' .. string.gsub(v,'"', '\\"' ) .. '"'
+  else
+    return "table" == type( v ) and table.tostring( v ) or
+      tostring( v )
+  end
+end
+
+function table.key_to_str ( k )
+  if "string" == type( k ) and string.match( k, "^[_%a][_%a%d]*$" ) then
+    return k
+  else
+    return "[" .. table.val_to_str( k ) .. "]"
+  end
+end
+
+function table.tostring( tbl )
+  local result, done = {}, {}
+  for k, v in ipairs( tbl ) do
+    table.insert( result, table.val_to_str( v ) )
+    done[ k ] = true
+  end
+  for k, v in pairs( tbl ) do
+    if not done[ k ] then
+      table.insert( result,
+        table.key_to_str( k ) .. "=" .. table.val_to_str( v ) )
+    end
+  end
+  return "{" .. table.concat( result, "," ) .. "}"
+end
+
+function string.split(d,p)
+   local t, ll
+   t={}
+   ll=0
+   if(#p == 1) then
+      return {p}
+   end
+   while true do
+      l = string.find(p, d, ll, true) -- find the next d in the string
+      if l ~= nil then -- if "not not" found then..
+         table.insert(t, string.sub(p,ll,l-1)) -- Save it in our array.
+         ll = l + 1 -- save just after where we found it for searching next time.
+      else
+         table.insert(t, string.sub(p,ll)) -- Save what's left in our array.
+         break -- Break at end, as it should be, according to the lua manual.
+      end
+   end
+   return t
+end
+
 function lk.checkFileExists(filePath)
 	if path.exists(filePath) and path.isfile(filePath) then
 		return true
@@ -97,10 +153,38 @@ function lk.checkOpts()
 	end
 end
 
-if #args < 1 then
+function lk.lex(inputCont)
+	local fileTab = string.split("\n", inputCont)
+	-- Lexer table example
+	--[[
+		{
+			{
+				{"type"="#","value"="#"},
+				{"type"="iden","value"="include"},
+				{"type"="space","value"=" "},
+				{"type"="<","value"="<"},
+				{"type"="iden","value"="io"},
+				{"type"=">","value"=">"}
+			},
+			...etc...50 million more lines...etc...
+		}
+	--]]
+	local lexerTable = {}
+	for i,l in ipairs(fileTab) do
+		local line = {}
+		for t,v in lexer.scan(l, nil, {space=false}) do
+			table.insert(line,{["type"]=t,["value"]=v})
+		end
+		table.insert(lexerTable,line)
+	end
+	-- The confusing part (to me :p): converting this mess of a table (https://hastebin.com/isipedisiy) to a much more appealing table (https://hastebin.com/ejibibuqeg)
+	-- WIP: Actual parsing from raw tokens to more descriptive tokens
+end
+
+if #args < 2 then
 	print("Usage: lk [OPTIONS] <file> <output>       ")
 	print("       -l : Compile as library.           ")
-	print("       -v : Verbose.                      ")
+	print("       -v : Verbose.           https://           ")
 	print("       -i : Don't compile, just interpret.")
 	print("       -V : Just validate the file.       ")	
 else
@@ -152,7 +236,12 @@ else
 		print("[INFO] Input file: '" .. inputPath .. "'.")
 		print("[INFO] Output file: '" .. outputPath .. "'.") 
 	end
+	local inputCont = file.read(inputPath)
+	if inputCont == nil then
+		print("[ERROR] Unknown error opening input file. (Do you have the correct permissions?). ")
+		exit(-1);
+	end
+	lk.lex(inputCont)
 	exit(0)
 end
-
 
