@@ -177,7 +177,7 @@ function lk.lex(inputCont)
 		end
 		table.insert(lexerTable,line)
 	end
-	-- The confusing part (to me :p): converting this mess of a table (https://hastebin.com/isipedisiy) to a much more appealing table (https://hastebin.com/ejibibuqeg)
+	-- The confusing part (to me :p): converting this mess of a table (https://hastebin.com/isipedisiy) to a much more appealing table (https://hastebin.com/lodisoragu)
 	-- WIP: Actual parsing from raw tokens to more descriptive tokens
 end
 
