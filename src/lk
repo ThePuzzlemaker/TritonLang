@@ -179,6 +179,74 @@ function lk.lex(inputCont)
 	end
 	-- The confusing part (to me :p): converting this mess of a table (https://hastebin.com/isipedisiy) to a much more appealing table (https://hastebin.com/lodisoragu)
 	-- WIP: Actual parsing from raw tokens to more descriptive tokens
+	local newTable = {}
+	for i,l in ipairs(lexerTable) do
+		local line = lexerTable[i]
+		local newLine = {}
+		if #line == 0 then
+			-- Empty line
+			table.insert(newLine, {type="empty"})
+		elseif line[1]["type"] == "-" and line[2]["type"] == "-" then
+			local comment = {}
+			comment["type"] = "comment"
+			local commentStr = ""
+			for i2,v in ipairs(line) do
+				if i2 > 2 then
+					commentStr = commentStr .. v["value"]
+				end
+			end
+			comment["value"] = commentStr
+			comment["commentType"] = "lua"
+			table.insert(newLine, comment)
+		elseif line[1]["type"] == "/" and line[2]["type"] == "/" then
+			local comment = {}
+			comment["type"] = "comment"
+			local commentStr = ""
+			for i2,v in ipairs(line) do
+				if i2 > 2 then
+					commentStr = commentStr .. v["value"]
+				end
+			end
+			comment["value"] = commentStr
+			comment["commentType"] = "klang"
+			table.insert(newLine, comment)
+		elseif line[1]["type"] == "#" and line[2]["value"] == "include" then
+			local include = {}
+			include["type"] = "include"
+			local includePath = ""
+			local scope = ""
+			for i2,v in ipairs(line) do
+				if i2 > 2 then
+					if i2 == 3 then
+						if line[3]["type"] ~= "space" then
+							print("[ERROR] Expected space after #include at line " .. i .. " column " .. i2+#"include"-1 .. ".")
+							exit(-1)
+						end
+					elseif i2 == 4 then
+						if line[4]["type"] == "<" then
+							scope = "global"
+						elseif line[4]["type"] == "[" then
+							scope = "local"
+						else
+							print("[ERROR] Unknown scope identifier '" .. line[4]["value"] .. "' in #include at line " .. i .. " column " .. i2+#"include"-1 .. ".")
+							exit(-1)
+						end
+					elseif i2 > 4 then
+						if line[i2]["type"] == ">" or line[i2]["type"] == "]" then
+							-- Do nothing
+						else
+							includePath = includePath .. line[i2]["value"]
+						end
+					end
+				end
+			end
+			include["scope"] = scope
+			include["value"] = includePath
+			table.insert(newLine, include)
+		end
+		table.insert(newTable,newLine)
+	end
+	print(table.tostring(newTable))
 end
 
 if #args < 2 then
