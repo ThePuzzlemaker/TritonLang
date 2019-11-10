@@ -1,6 +1,7 @@
 site_name: Triton Language
 theme:
   name: 'material'
+  favicon: 'docs/img/favicon.ico'
 nav:
 - Home: 'index.md'
 - Links: 'links.md'
