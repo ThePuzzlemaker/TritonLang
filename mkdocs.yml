@@ -1,0 +1,7 @@
+site_name: Triton Language
+theme:
+  name: 'material'
+nav:
+- Home: 'index.md'
+- Links: 'links.md'
+repo_url: https://github.com/ThePuzzlemaker/TritonLang/
