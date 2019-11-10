@@ -4,6 +4,12 @@
 
 Triton is a C++ styled language that compiles directly to Lua. It is currently being written for the Minecraft mod, OpenComputers as it contains a default computer architecture/language of Lua.
 
+## Dependencies [Included]
+
+[Tieske/Penlight](https://github.com/Tieske/Penlight) - A set of Lua libraries [This project will specifically use its lexer library]
+
+[mpeterv/argparse](https://github.com/mpeterv/argparse) - A command line parser for Lua inspired by Python's argparse
+
 ## Hello, world! [Currently pseudocode]
 
 ```cpp
