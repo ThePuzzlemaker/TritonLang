@@ -1,3 +1,7 @@
+# Triton Preprocessor Operations, Macros, and Directives
+
+```cpp
+
 /*
 Triton Preprocessor Operations, Macros, and Directives
 ======================================================
@@ -109,3 +113,5 @@ int main() {
 // Logs the current function name as a string (in this example, "main")
   io::info(__FUNC__);
 }
+
+```
