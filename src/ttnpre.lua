@@ -51,11 +51,11 @@ function explode(d,p)
    return t
 end
 
-local __TTNPRE_VERSION = "0.0.1-git"
+local __TTNPRE_VERSION = "0.0.1+git"
 
 local __TTNPRE_DEFAULT_INCLUDES = {"/usr/include", "/lib/include", "/usr/lib/include", "/home/include", "/home/lib/include", "./lib/include", "./lib", "./include"}
 
-local __TTNPRE_DEFAULT_VPREDEFS = {{"__TNTNPRE_VERSION__", __TTNPRE_VERSION}}
+local __TTNPRE_DEFAULT_VPREDEFS = {{"__TTNPRE_VERSION__", __TTNPRE_VERSION}}
 
 local argsRaw = {...}
 
@@ -103,7 +103,11 @@ parser:option("--ttnlinkv")
 
 local args = parser:parse(argsRaw)
 
-local environmentIncludes = explode(":", os.getenv("INCLUDES"))
+local environmentalInclude = {}
+
+if os.getenv("INCLUDES") ~= nil then
+  environmentIncludes = explode(":", os.getenv("INCLUDES"))
+end
 
 args.includes = array_concat(args.includes, __TTNPRE_DEFAULT_INCLUDES, environmentIncludes)
 args.vpredefines = array_concat(args.vpredefines, __TTNPRE_DEFAULT_VPREDEFS, {{"__TTNLINK_VERSION__", args.ttnlinkv}, {"__TTNCMP_VERSION__", args.ttncmpv}})
@@ -116,13 +120,9 @@ function verbose(level, func)
 end
 
 print("Triton Language Preprocessor v" .. __TTNPRE_VERSION)
-
 verbose(2, function() print("Input file: '" .. args.input .. "' | Output file: '" .. args.output .. "'") end)
-
 verbose(2, function() print("Include directories: " .. serial.serialize(args.includes)) end)
-
 verbose(2, function() print("Valued predefines: " .. serial.serialize(args.vpredefines)) end)
-
 verbose(2, function() print("Predefines: " .. serial.serialize(args.predefines)) end)
 
 local inputFile = io.open(args.input, "r")
@@ -131,7 +131,8 @@ local outputFile = io.open(args.output, "w")
 if inputFile == nil then
   print("Could not open input file '" .. args.input .. "'!")
   return
-elseif outputFile == nil then
+end
+if outputFile == nil then
   print("Could not open output file '" .. args.output .. "'!")
   return
 end
@@ -141,4 +142,9 @@ local inputContent = inputFile:read("*a")
 verbose(3, function() print("Input file content: \n" .. inputContent) end)
 
 inputFile:close()
+
+local lexed = lexer.scan(inputContent)
+
+verbose(3, function() for t, v in lexed do print(t, v) end end)
+
 outputFile:close()

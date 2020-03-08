@@ -1,0 +1,8 @@
+// Include IO library
+#include <io>
+
+int main() {
+  // Log "Hello, world!" to stdout
+  io::info("Hello, world!");
+  return 0;
+}

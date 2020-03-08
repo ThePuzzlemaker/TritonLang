@@ -35,8 +35,8 @@ Includes
 
 // Defines the identifier EEK
 #define EEK
-// Defines the macro EEK to add "EEK " to the end of string str
-#define EEKIFIER(str) str+"EEK"
+// Defines the macro EEKIFIER to add "EEK" to the end of string str
+#macro EEKIFIER(str) str+"EEK"
 // Undefines EEK
 #undef EEK
 // Redefines EEK to equal 1
@@ -122,6 +122,8 @@ io::info(__LINE__);
 
 // Function main(), return value int
 int main() {
-// Logs the current function name as a string (in this example, "main")
+  // Logs the current function name as a string (in this example, "main")
   io::info(__FUNC__);
+  // Uses the macro "EEKIFIER" with the value "test", will print "testeek"
+  io::info(m:EEKIFIER("test"))
 }
