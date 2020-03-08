@@ -8,6 +8,22 @@ Triton Preprocessor Operations, Macros, and Directives
 */
 
 /*
+==========
+Header Ops
+==========
+*/
+
+// Makes sure this header is only included once to avoid problems, simply a shortened utility function
+// Translates to (assuming header is called "foo.h"):
+/*
+// First instance of a header called foo.h, used to be careful not to cause extra problems
+#ifndef __TTN_HEADER_FOO_H_1
+// HEADER CONTENT //
+#endif
+/*
+#hop once
+
+/*
 ========
 Includes
 ========
