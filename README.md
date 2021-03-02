@@ -1,5 +1,12 @@
 # Triton
 
+# NOTE
+TritonLang is currently not being worked on. This is for various reasons, inclduing:
+- C++ is not only very complex but is just... uh... not good
+- I have no clue about making programming languages so I'd rather start making one in a language I'm more familiar with.
+- I'm already working on [Calypso](https://github.com/calypso-lang/calypso). I might eventually write a Lua backend for it. I'm not sure though.
+Thanks for your understanding.
+
 ## Overview
 
 Triton is a C++ styled language that compiles directly to Lua. It is currently being written for the Minecraft mod, OpenComputers as it contains a default computer architecture/language of Lua.
